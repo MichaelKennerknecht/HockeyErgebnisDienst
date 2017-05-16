@@ -7,7 +7,6 @@ import java.sql.Statement;
 import de.hdm.ErgebnisDienst.shared.bo.User;
 
 public class UserMapper {
-
 	/**
 	 * Hier wird die Klasse instanziiert.
 	 */
@@ -28,7 +27,7 @@ public class UserMapper {
 	}
 
 	/**
-	 * Mithilfe von diesem Konstruktor wird verhindert, dass eine neue Instanz
+	 * Mithilfe von folgenden Konstruktor wird verhindert, dass eine neue Instanz
 	 * der Klasse erzeugt wird.
 	 */
 	protected UserMapper() {
