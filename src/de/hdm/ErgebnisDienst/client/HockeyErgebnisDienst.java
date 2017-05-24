@@ -32,7 +32,10 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-
+	// Proxy Objekt 
+	private ErgebnisDienstAdministration adminService = ClientsideSettings.
+	
+	
 	private VerticalPanel navigator = new VerticalPanel();
 	private VerticalPanel details = new VerticalPanel();
 	private VerticalPanel matchdays = new VerticalPanel();
@@ -89,12 +92,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 
 		topPanel.add(ergebnis);
 		
-		// add style names to widgets
-				ergebnis.setStylePrimaryName("ergebnisButton");
 		
-				Image startImage = new Image("/images/HdM_Logo.jpg");
-				startImage.setStylePrimaryName("image");
-				navigator.add(startImage);
 	}
 
 	private void loadLogin() {
@@ -123,5 +121,19 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		RootPanel.get("Details").add(loginPanel);
 
 	}
+	protected void loadAllTeams() {
+		ergebnis.addClickHandler(new ClickHandler() {
+			private void onClickEvent(ClickEvent event) {
+				
+				System.out.println();
 
+			}
+		});
+		}
+	// add style names to widgets
+	ergebnis.setStylePrimaryName("ergebnisButton");
+	}
+//	Image startImage = new Image("/images/HdM_Logo.jpg");
+	//startImage.setStylePrimaryName("image");
+	//navigator.add(startImage);
 }

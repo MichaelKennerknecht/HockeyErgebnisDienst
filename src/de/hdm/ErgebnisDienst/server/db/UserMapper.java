@@ -41,7 +41,7 @@ public class UserMapper {
 			// Neues Statement anlegen
 			Statement stmt = con.createStatement();
 			// Der höchste Primärschlüssel wird in der Datenbank gesucht
-			ResultSet rs = stmt.executeQuery("SELECT MAX(userId) AS maxid " + "FROM hockeydienst.user ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(userId) AS maxid " + "FROM hockeydienst");
 
 			if (rs.next()) {
 				// Die userId wird nun anhand der aktuell höchsten userId um

@@ -4,17 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.hdm.ErgebnisDienst.shared.bo.Team;
 
 public class TeamMapper {
 
-	/*TO DO
-	 * Create
-	 * Update
-	 * Delete
-	 * Read
+	/*
+	 * TO DO Create Update Delete Select all teams, verschiedene
 	 */
-	
+
 	/**
 	 * Hier wird die Klasse instanziiert.
 	 */
@@ -42,29 +42,28 @@ public class TeamMapper {
 
 	}
 
-	public TeamMapper read(Team teamHome) {
+	public List <Team> getAllTeams() {
 		Connection con = DBConnection.connection();
-
+		List<Team> result = new LinkedList<Team>();
 		try {
 			// Neues Statement anlegen
 			Statement stmt = con.createStatement();
-			// Der höchste Primärschlüssel wird in der Datenbank gesucht
-			ResultSet rs = stmt.executeQuery("READ MAX(userId) AS maxid " + "FROM hockeydienst.user ");
+			// Alle Teams der Tabelle werden abgefragt
+			ResultSet rs = stmt.executeQuery("SELECT team_Id, name FROM hockeydienst.teams");
 
 			if (rs.next()) {
-				// Die userId wird nun anhand der aktuell höchsten userId um
-				// eins erhöht.
-				user.setUserId(rs.getInt("maxid") + 1);
-				stmt = con.createStatement();
-				// Statement ausfüllen und als Query an die Datenbank schicken
-				stmt.executeUpdate("SELECT INTO hockeydienst.user (user_id, name, googleid, is_admin)" + "VALUES ("
-						+ user.getUserId() + ", " + "'" + user.getName() + "'" + ", " + "'" + user.getGoogleId() + "'"
-						+ ", " + "'" + user.getIsAdmin() + "')");
+				Team team = new Team();
+				team.setTeamId(rs.getInt("team_Id"));
+				team.setName(rs.getString("name"));
+				result.add(team);
 			}
-		} catch (SQLException e) {
+			} catch (SQLException e) {
 			e.printStackTrace();
+			}
+			//Teams in der Liste ausgeben
+			return result;
+		
 		}
-		// User-Objekt zurückgeben
-		return user;
-	}
+		
 }
+
