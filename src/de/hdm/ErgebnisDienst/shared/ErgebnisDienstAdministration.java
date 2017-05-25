@@ -6,8 +6,9 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.hdm.Application.shared.bo.Note;
-import com.hdm.Application.shared.bo.Notebook;
+import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
+import de.hdm.ErgebnisDienst.shared.bo.Matchday;
+
 
 import de.hdm.ErgebnisDienst.shared.bo.*;
 

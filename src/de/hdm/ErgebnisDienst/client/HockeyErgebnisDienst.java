@@ -13,6 +13,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+
+import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 import de.hdm.ErgebnisDienst.shared.LoginInfo;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -33,7 +35,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	// Proxy Objekt 
-	private ErgebnisDienstAdministration adminService = ClientsideSettings.
+	private ErgebnisDienstAdministration adminService = ClientSideSettings;
 	
 	
 	private VerticalPanel navigator = new VerticalPanel();

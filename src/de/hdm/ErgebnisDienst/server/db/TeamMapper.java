@@ -10,16 +10,10 @@ import java.util.List;
 import de.hdm.ErgebnisDienst.shared.bo.Team;
 
 public class TeamMapper {
-
-	/*
-	 * TO DO Create Update Delete Select all teams, verschiedene
-	 */
-
 	/**
 	 * Hier wird die Klasse instanziiert.
 	 */
 	private static TeamMapper teamMapper = null;
-
 	/**
 	 * Die statische Methode kann somit durch TeamMapper.teamMapper() aufgerufen
 	 * werden. Dadurch wird sichergestellt, dass nur eine einzelne Instanz der
@@ -41,8 +35,11 @@ public class TeamMapper {
 	protected TeamMapper() {
 
 	}
-
-	public List <Team> getAllTeams() {
+	/**
+	*Alle Teams aufrufen
+	*
+	*/
+	public List<Team> getAllTeams() {
 		Connection con = DBConnection.connection();
 		List<Team> result = new LinkedList<Team>();
 		try {
@@ -57,13 +54,12 @@ public class TeamMapper {
 				team.setName(rs.getString("name"));
 				result.add(team);
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			}
-			//Teams in der Liste ausgeben
-			return result;
-		
 		}
-		
-}
+		// Teams in der Liste ausgeben
+		return result;
 
+	}
+
+}
