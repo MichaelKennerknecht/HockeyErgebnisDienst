@@ -130,7 +130,8 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * noch kein Notizbuch angelegt wird eins angelegt, zusammen mit einer
 	 * Permission.
 	 */
-	public List<Team> getAllTeams() throws IllegalArgumentException {
+	/**public List<Team> getAllTeams() throws IllegalArgumentException {
+		System.out.println("Hallo bin in der Methode");
 		List<Team> list = this.nbMapper.getAllTeams();
 		
 		if (list.size() == 0) {
@@ -140,6 +141,26 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 		}
 			
 	}
+	public Team findByName(Team name) throws IllegalArgumentException{
+		System.out.println("Hallo bin in der Methode");
+		
+		if(name != null ){
+		}
+		return name;
+	}**/
+
+	@Override
+	public List<Team> getAllTeams() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Team findByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	}
 
 	
-}
+

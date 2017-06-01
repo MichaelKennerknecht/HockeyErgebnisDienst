@@ -26,27 +26,38 @@ public class DBConnection {
 	 * 
 	 */
 
-	//private static String googleUrl = "jdbc:google:mysql://hockeyErgebnisDienst:textydb?user=root&password=root";
+	private static String googleUrl = "jdbc:google:mysql://hockeyErgebnisDienst:textydb?user=root&password=root";
 	private static String localUrl = "jdbc:mysql://localhost:3306/?user=root&password=root";
 
+	@SuppressWarnings("unused")
 	public static Connection connection() {
 		// Wenn es noch keine Verbindung zur Datenbank gibt, wird versucht diese
 		// herzustellen.
 		if (con == null) {
 			String url = null;
+			
+			String user = "root";
+			String password = "root";
+			
 			try {
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-					// Wenn über die Verbindung über die App Engine geschieht
-					// dann:
-					// Connecting from App Engine.
-					// Load the class that provides the "jdbc:google:mysql://"
-					// prefix.
+					/**
+					 * Load the class that provides the new
+					 * "jdbc:google:mysql://" prefix.
+					 */
+					Class.forName("com.mysql.jdbc.GoogleDriver");
+					url = googleUrl;
+
+				} else {
+					/**
+					 * Local MySQL instance to use during development.
+					 */
 					Class.forName("com.mysql.jdbc.Driver");
 					url = localUrl;
 				}
-
-				con = DriverManager.getConnection(url);
-			} catch (Exception e) {
+			}
+			
+			catch (Exception e) {
 				con = null;
 				e.printStackTrace();
 			}

@@ -96,13 +96,18 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 */
 
 	public void onModuleLoad() {
+		String teamnamestart = "VfB Stuttgart";
+				Window.alert("Teamname Start:" + teamnamestart);
+
 		//Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
-		adminService.getAllTeams(new AsyncCallback<List<Team>>() {
+		adminService.findByName(teamnamestart, new AsyncCallback<Team>() {
 			
 			@Override
-			public void onSuccess(List<Team> result) {
-			Window.alert("Ergebnis 1: "+ result);
-				
+			public void onSuccess(final Team result) {
+				String teamname = result.getName();
+				System.out.println("Teamname lautet" + teamname);
+			Window.alert(teamname);
+			//Window.alert("success");
 			}
 			
 			@Override
@@ -112,7 +117,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 				
 			}
 		});
-		loadLogin();
+		//loadLogin();
 
 		topPanel.add(ergebnis);
 		

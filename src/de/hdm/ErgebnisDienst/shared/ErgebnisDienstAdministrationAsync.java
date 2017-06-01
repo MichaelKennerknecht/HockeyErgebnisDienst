@@ -23,8 +23,12 @@ public interface ErgebnisDienstAdministrationAsync {
 			throws IllegalArgumentException;
 
 	
+	public void findByName(String name, AsyncCallback<Team> callback);
+
 
 	void getAllTeams(AsyncCallback<List<Team>> callback);
+
+	//void getAllTeams(AsyncCallback<List<Team>> callback);
 	
 	//public void getCurrentUser(AsyncCallback<AppUser> callback)
 	
