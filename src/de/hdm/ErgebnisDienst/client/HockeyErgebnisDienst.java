@@ -2,7 +2,11 @@ package de.hdm.ErgebnisDienst.client;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Anchor;
@@ -15,7 +19,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
+import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
 import de.hdm.ErgebnisDienst.shared.LoginInfo;
+import de.hdm.ErgebnisDienst.shared.bo.Team;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -35,7 +42,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	// Proxy Objekt 
-	private ErgebnisDienstAdministration adminService = ClientSideSettings;
+	private ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
 	
 	
 	private VerticalPanel navigator = new VerticalPanel();
@@ -89,7 +96,22 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 */
 
 	public void onModuleLoad() {
-		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
+		//Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
+		adminService.getAllTeams(new AsyncCallback<List<Team>>() {
+			
+			@Override
+			public void onSuccess(List<Team> result) {
+			Window.alert("Ergebnis 1: "+ result);
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("du funktionierst nicht");
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		loadLogin();
 
 		topPanel.add(ergebnis);
@@ -123,19 +145,19 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		RootPanel.get("Details").add(loginPanel);
 
 	}
-	protected void loadAllTeams() {
+	/*protected void loadAllTeams() {
 		ergebnis.addClickHandler(new ClickHandler() {
-			private void onClickEvent(ClickEvent event) {
+			private void onClick(ClickEvent event) {
 				
 				System.out.println();
 
 			}
 		});
-		}
+		}*/
 	// add style names to widgets
-	ergebnis.setStylePrimaryName("ergebnisButton");
+//ergebnis.setStylePrimaryName("ergebnisButton");
 	}
+
 //	Image startImage = new Image("/images/HdM_Logo.jpg");
 	//startImage.setStylePrimaryName("image");
 	//navigator.add(startImage);
-}

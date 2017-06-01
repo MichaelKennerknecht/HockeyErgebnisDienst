@@ -3,11 +3,8 @@ package de.hdm.ErgebnisDienst.shared.bo;
 import java.io.Serializable;
 
 public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3236917069560278653L;
 	private int userId;
 	private String name;
 	private String email;

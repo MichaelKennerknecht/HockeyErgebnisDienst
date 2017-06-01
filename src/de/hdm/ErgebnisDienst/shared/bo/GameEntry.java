@@ -3,8 +3,9 @@ package de.hdm.ErgebnisDienst.shared.bo;
 import java.io.Serializable;
 
 	
-public class GameEntry {
-
+public class GameEntry implements Serializable { 
+	private static final long serialVersionUID = 1L;
+	
 	private int game_Id;
 	private int home_Id;
 	private int guest_Id;
