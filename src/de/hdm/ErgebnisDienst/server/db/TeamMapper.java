@@ -58,7 +58,7 @@ public class TeamMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM teams " + "WHERE name='" + name + "';");
 			//ResultSet rs = stmt.executeQuery("UPDATE teams SET name = " + name + "WHERE team_id = 2;");
-
+			System.out.println("SELECT * FROM teams " + "WHERE name='" + name + "';");
 			/**
 			 * Da id Primaerschl�ssel ist, kann max. nur ein Tupel zur�ckgegeben
 			 * werden. Pr�fe, ob ein Ergebnis vorliegt.
@@ -79,6 +79,36 @@ public class TeamMapper {
 
 		return null;
 	}
+
+/*	public List<Team> getAllTeams() {
+		
+		Connection con = DBConnection.connection();
+		List<Team> teamlist = new LinkedList<Team>();
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT team_id, name FROM `teams` ");
+		
+			
+			while (rs.next()) {
+				System.out.println("NAME RS: "+rs.getString("name"));
+				System.out.println("RESULTSET: "+rs.getFetchSize());
+				Team t = new Team();
+				t.setName(rs.getString("name"));
+				t.setTeamId(rs.getInt("team_id"));
+				teamlist.add(t);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("SQL Abfrage fehlgeschlagen. ");
+			e.printStackTrace();
+
+			return null;
+		}
+		return teamlist;
+		
+	}
+*/
 	/**
 	 * public List<Team> getAllTeams() { Connection con =
 	 * DBConnection.connection(); List<Team> result = new LinkedList<Team>();

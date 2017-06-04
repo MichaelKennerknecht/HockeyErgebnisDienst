@@ -27,7 +27,8 @@ public class DBConnection {
 	 */
 
 	private static String googleUrl = "jdbc:google:mysql://hockeyErgebnisDienst:textydb?user=root&password=root";
-	private static String localUrl = "jdbc:mysql://localhost:3306/?user=root&password=root";
+	private static String localUrl = "jdbc:mysql://localhost:3306/hockeydienst?user=root&password=root";
+
 
 	@SuppressWarnings("unused")
 	public static Connection connection() {
@@ -55,6 +56,7 @@ public class DBConnection {
 					Class.forName("com.mysql.jdbc.Driver");
 					url = localUrl;
 				}
+				con = DriverManager.getConnection(url, user, password);
 			}
 			
 			catch (Exception e) {

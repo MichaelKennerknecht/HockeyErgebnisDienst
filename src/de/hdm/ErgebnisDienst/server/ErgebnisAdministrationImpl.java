@@ -98,7 +98,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * Referenz auf den DatenbankMapper, der Notebookobjekte mit der Datenbank
 	 * abgleicht.
 	 */
-	private TeamMapper nbMapper;
+	private TeamMapper teMapper;
 
 	/**
 	 * Referenz auf den DatenbankMapper, der Duedateobjekte mit der Datenbank
@@ -115,8 +115,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 		this.uMapper = UserMapper.userMapper();
 		this.nMapper = GameEntryMapper.gameEntryMapper();
 		this.pMapper = MatchdayMapper.matchdayMapper();
-		this.ddMapper = UserMapper.userMapper();
-		this.nbMapper = TeamMapper.teamMapper();
+				this.teMapper = TeamMapper.teamMapper();
 
 	}
 
@@ -130,35 +129,32 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * noch kein Notizbuch angelegt wird eins angelegt, zusammen mit einer
 	 * Permission.
 	 */
-	/**public List<Team> getAllTeams() throws IllegalArgumentException {
-		System.out.println("Hallo bin in der Methode");
-		List<Team> list = this.nbMapper.getAllTeams();
-		
-		if (list.size() == 0) {
-			return null;
-		} else {
-			return list;
-		}
-			
+	public List<Team> getAllTeams() throws IllegalArgumentException {
+//		System.out.println("Hallo bin in der Methode");
+//		List<Team> list = this.teMapper.getAllTeams();
+//		
+//		if (list.size() == 0) {
+//			return null;
+//		} else {
+//			return list; }
+		return null;
+					
 	}
+	
 	public Team findByName(Team name) throws IllegalArgumentException{
 		System.out.println("Hallo bin in der Methode");
 		
 		if(name != null ){
 		}
 		return name;
-	}**/
-
-	@Override
-	public List<Team> getAllTeams() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
 	}
+
+	
 
 	@Override
 	public Team findByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return teMapper.findByName(name);
 	}
 	}
 

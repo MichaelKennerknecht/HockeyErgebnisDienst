@@ -1,12 +1,15 @@
 package de.hdm.ErgebnisDienst.client;
 
+import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Anchor;
@@ -15,6 +18,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -59,6 +63,11 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	final Label passwordLabel = new Label("Password");
 	private Anchor signInLink = new Anchor("Login");
 	final Button ergebnis = new Button("Ergebnisse eintragen");
+//	final Cell<String> spieltag;
+//	
+//	final CellList<String> liste = new CellList<String>(null, null);
+//	final ListBox teamdropdown = new ListBox();
+	
 
 	de.hdm.ErgebnisDienst.client.gui.LoginServiceAsync loginService = GWT
 			.create(de.hdm.ErgebnisDienst.client.gui.LoginService.class);
@@ -96,18 +105,28 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 */
 
 	public void onModuleLoad() {
-		String teamnamestart = "VfB Stuttgart";
-				Window.alert("Teamname Start:" + teamnamestart);
+		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
+		
+		
+		topPanel.add(ergebnis);
+		RootPanel.get("Top").add(topPanel);
+		
+	//	details.add(teamdropdown);
+	//	RootPanel.get("Navigator").add(cellList);
+	//	RootPanel.get("Details").add(details);
+		
+		String teamnamestart = "TuS Meersburg";				
 
-		//Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
-		adminService.findByName(teamnamestart, new AsyncCallback<Team>() {
+		
+		adminService.getAllTeams(new AsyncCallback<List<Team>>() {
 			
 			@Override
-			public void onSuccess(final Team result) {
-				String teamname = result.getName();
-				System.out.println("Teamname lautet" + teamname);
-			Window.alert(teamname);
-			//Window.alert("success");
+			public void onSuccess(final List<Team> result) {
+//				Window.alert("Anzahl Teams aus DB: "+result.size());
+//				for (Team team : result) {
+//					teamdropdown.addItem(team.getName());
+//				}
+				
 			}
 			
 			@Override
@@ -119,7 +138,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		});
 		//loadLogin();
 
-		topPanel.add(ergebnis);
+	
 		
 		
 	}
@@ -128,9 +147,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 
 		// Label headertext = new Label();
 		// headertext.setText("Hier ist der HEADER");
-		// topPanel.add(headertext);
-
-		
+		// topPanel.add(headertext);	
 
 		Cookies.setCookie("usermail", null);
 		RootPanel.get("Top").add(topPanel);
