@@ -9,6 +9,10 @@ public class Matchday {
 	private int md_count;
 
 	
+	public Matchday(String string) {
+		this.name  = string;
+	}
+
 	public int getMdId() {
 		return md_Id;
 	}

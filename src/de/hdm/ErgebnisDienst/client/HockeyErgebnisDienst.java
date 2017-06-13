@@ -1,14 +1,25 @@
 package de.hdm.ErgebnisDienst.client;
 
+import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
+import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
+import de.hdm.ErgebnisDienst.shared.LoginInfo;
+import de.hdm.ErgebnisDienst.shared.bo.Matchday;
+import de.hdm.ErgebnisDienst.shared.bo.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -21,18 +32,19 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
-
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
-import de.hdm.ErgebnisDienst.shared.LoginInfo;
-import de.hdm.ErgebnisDienst.shared.bo.Team;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public class HockeyErgebnisDienst implements EntryPoint {
 	/**
@@ -45,10 +57,9 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	// Proxy Objekt 
+	// Proxy Objekt
 	private ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
-	
-	
+
 	private VerticalPanel navigator = new VerticalPanel();
 	private VerticalPanel details = new VerticalPanel();
 	private VerticalPanel matchdays = new VerticalPanel();
@@ -63,11 +74,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	final Label passwordLabel = new Label("Password");
 	private Anchor signInLink = new Anchor("Login");
 	final Button ergebnis = new Button("Ergebnisse eintragen");
-//	final Cell<String> spieltag;
-//	
-//	final CellList<String> liste = new CellList<String>(null, null);
-//	final ListBox teamdropdown = new ListBox();
-	
+	private LoginInfo loginInfo = null;
 
 	de.hdm.ErgebnisDienst.client.gui.LoginServiceAsync loginService = GWT
 			.create(de.hdm.ErgebnisDienst.client.gui.LoginService.class);
@@ -76,78 +83,93 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 * Die Instanz von LoginInfo dient als Hilfsklasse fuer das Login und stellt
 	 * erforderliche Variablen und Operationen bereit.
 	 */
-	private LoginInfo loginInfo = null;
 
 	/**
-	 * Entry point method.
+	 * A simple data type that represents a matchday.
 	 */
+//	private static class Matchday {
+//		private final String name;
+//
+//		public Matchday(String name) {
+//			this.name = name;
+//		}
+//	}
 
-	/*
-	 * protected void matchdayPanel() {
-	 * 
-	 * // Erstellen von SpieltagsÃ¼bersicht
-	 * 
-	 * final Grid matchday = new Grid(1, 0); matchday.setText(0, 0,
-	 * "Spieltag 1");
-	 * 
-	 * 
-	 * // Inhalt einfÃ¼gen int numRows = matchday.getRowCount(); int numColumns
-	 * = matchday.getColumnCount(); for (int row = 0; row < numRows; row++) {
-	 * for (int col = 0; col < numColumns; col++) { matchday.setText(row, col,
-	 * "Spieltag 1");
-	 * 
-	 * }
-	 * 
-	 * } matchdays.add(matchday); navigator.add(matchdays); //
-	 * matchday.setWidget(row, col, new Image(Showcase.images.gwtLogo()));
-	 * 
-	 * }
-	 */
+	/**
+	   * The list of data to display.
+	   */
+//	   private static final List<Matchday> MATCHDAYS = Arrays.asList(
+//			      new Matchday("Spieltag 01"), 
+//			      new Matchday("Spieltag 02"),
+//			      new Matchday("Spieltag 03"),
+//			      new Matchday("Spieltag 04"),
+//			      new Matchday("Spieltag 05"),
+//			      new Matchday("Spieltag 06"),
+//			      new Matchday("Spieltag 07"),
+//			      new Matchday("Spieltag 08"),
+//			      new Matchday("Spieltag 09"),
+//			      new Matchday("Spieltag 10"),
+//			      new Matchday("Spieltag 11"),
+//			      new Matchday("Spieltag 12"),
+//			      new Matchday("Spieltag 13"),
+//			      new Matchday("Spieltag 14"),
+//			      new Matchday("Spieltag 15"),
+//			      new Matchday("Spieltag 16"),
+//			      new Matchday("Spieltag 17"),
+//			      new Matchday("Spieltag 18"));
+	   
+	   private static final List<Matchday> MATCHDAYS = Arrays.asList(
+
 
 	public void onModuleLoad() {
-		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß beim austesten!");
-		
-		
+		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß!");
+
 		topPanel.add(ergebnis);
 		RootPanel.get("Top").add(topPanel);
-		
-	//	details.add(teamdropdown);
-	//	RootPanel.get("Navigator").add(cellList);
-	//	RootPanel.get("Details").add(details);
-		
-		String teamnamestart = "TuS Meersburg";				
 
-		
-		adminService.getAllTeams(new AsyncCallback<List<Team>>() {
-			
+		// Create a CellTable.
+		CellTable<Matchday> table = new CellTable<Matchday>();
+		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+
+		// Add a text column to show the name.
+		TextColumn<Matchday> nameColumn = new TextColumn<Matchday>() {
 			@Override
-			public void onSuccess(final List<Team> result) {
-//				Window.alert("Anzahl Teams aus DB: "+result.size());
-//				for (Team team : result) {
-//					teamdropdown.addItem(team.getName());
-//				}
-				
+			public String getValue(Matchday object) {
+				return object.name;
 			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("du funktionierst nicht");
-				// TODO Auto-generated method stub
-				
+		};
+		table.addColumn(nameColumn, "Spieltag");
+
+		// Add a selection model to handle user selection.
+		final SingleSelectionModel<Matchday> selectionModel = new SingleSelectionModel<Matchday>();
+		table.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				Matchday selected = selectionModel.getSelectedObject();
+				if (selected != null) {
+					Window.alert("You selected: " + selected.name);
+				}
 			}
 		});
-		//loadLogin();
 
-	
-		
-		
+		// Set the total row count. This isn't strictly necessary,
+		// but it affects paging calculations, so its good habit to
+		// keep the row count up to date.
+		table.setRowCount(MATCHDAYS.size(), false);
+
+		// Push the data into the widget.
+		table.setRowData(0, MATCHDAYS);
+
+		VerticalPanel panel = new VerticalPanel();
+		panel.setBorderWidth(1);
+		panel.setWidth("100");
+		panel.add(table);
+
+		// Add the widgets to the root panel.
+		RootPanel.get("Navigator").add(panel);
 	}
 
 	private void loadLogin() {
-
-		// Label headertext = new Label();
-		// headertext.setText("Hier ist der HEADER");
-		// topPanel.add(headertext);	
 
 		Cookies.setCookie("usermail", null);
 		RootPanel.get("Top").add(topPanel);
@@ -165,21 +187,20 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		Cookies.setCookie("userID", null);
 		RootPanel.get("Details").clear();
 		RootPanel.get("Details").add(loginPanel);
-
 	}
-	/*protected void loadAllTeams() {
-		ergebnis.addClickHandler(new ClickHandler() {
-			private void onClick(ClickEvent event) {
-				
-				System.out.println();
+}
 
-			}
-		});
-		}*/
-	// add style names to widgets
-//ergebnis.setStylePrimaryName("ergebnisButton");
-	}
+/*
+ * protected void loadAllTeams() { ergebnis.addClickHandler(new ClickHandler() {
+ * private void onClick(ClickEvent event) {
+ * 
+ * System.out.println();
+ * 
+ * } }); }
+ */
+// add style names to widgets
+// ergebnis.setStylePrimaryName("ergebnisButton");
 
-//	Image startImage = new Image("/images/HdM_Logo.jpg");
-	//startImage.setStylePrimaryName("image");
-	//navigator.add(startImage);
+// Image startImage = new Image("/images/HdM_Logo.jpg");
+// startImage.setStylePrimaryName("image");
+// navigator.add(startImage);

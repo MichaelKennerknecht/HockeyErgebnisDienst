@@ -40,7 +40,7 @@ div#TopLevelFrame {
 
 div#Details {
 	margin-left: 20em;
-	min-height: 400px;
+	min-height: 58000px;
 	max-height: 500px;
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
@@ -52,7 +52,7 @@ div#Navigator {
 	background: #f4f4f4;
 	float: left;
 	width: 18em;
-	min-height: 400px;
+	min-height: 580px;
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
 }
@@ -60,7 +60,7 @@ div#Navigator {
 div#Extra {
 	clear: both;
 	padding: 10px 0;
-	margin: 0 auto; /* standardkonforme horizontale Zentrierung */
+	margin: 0 auto; 
 	border-top: 1px silver;
 	font-size: 80%;
 	text-align: center;

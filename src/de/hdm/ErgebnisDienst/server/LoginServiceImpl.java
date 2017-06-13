@@ -22,7 +22,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	 * Anmeldung wird eine Login-URL zur Anzeige eines Anmeldebildschirms fuer
 	 * den Benutzer erstellt.
 	 * 
-	 * @author Lorena Esposito
 	 * @param requestUri
 	 * @return die Logininformationen, die vom Benutzerservice (Google)
 	 *         ausgelesen wurden
