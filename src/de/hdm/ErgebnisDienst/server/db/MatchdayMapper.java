@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,9 +42,9 @@ public class MatchdayMapper {
 	 * Alle Matchdays aufrufen
 	 *
 	 */
-	public List<Matchday> getAllMatchdays() {
+	public ArrayList<Matchday> getAllMatchdays() {
 		Connection con = DBConnection.connection();
-		List<Matchday> result = new LinkedList<Matchday>();
+		ArrayList<Matchday> result = new ArrayList<Matchday>();
 		try {
 			// Neues Statement anlegen
 			Statement stmt = con.createStatement();
@@ -51,7 +52,7 @@ public class MatchdayMapper {
 			ResultSet rs = stmt.executeQuery("SELECT md_Id, name FROM hockeydienst.matchday");
 
 			if (rs.next()) {
-				Matchday matchday = new Matchday();
+				Matchday matchday = new Matchday(null);
 				matchday.setMdId(rs.getInt("md_id"));
 				matchday.setName(rs.getString("name"));
 				result.add(matchday);

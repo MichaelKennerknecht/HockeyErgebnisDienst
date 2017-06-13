@@ -118,7 +118,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 //			      new Matchday("Spieltag 17"),
 //			      new Matchday("Spieltag 18"));
 	   
-	   private static final List<Matchday> MATCHDAYS = Arrays.asList(
+	   private static final List<Matchday> MATCHDAYS = Arrays.asList
 
 
 	public void onModuleLoad() {
@@ -135,9 +135,28 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		TextColumn<Matchday> nameColumn = new TextColumn<Matchday>() {
 			@Override
 			public String getValue(Matchday object) {
-				return object.name;
-			}
-		};
+				 adminService.getAllTeams(new AsyncCallback<ArrayList<Team>>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Hier funktioniert nichts");
+						// TODO Auto-generated method stub
+						
+					}
+
+					
+								
+
+					@Override
+					public void onSuccess(ArrayList<Team> result) {
+						if( result.size() > 0 ){
+							Window.alert("result:" + result.size());
+						
+					}
+				 }
+				 }
+			
+				 );
 		table.addColumn(nameColumn, "Spieltag");
 
 		// Add a selection model to handle user selection.
@@ -188,7 +207,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		RootPanel.get("Details").clear();
 		RootPanel.get("Details").add(loginPanel);
 	}
-}
+		};}}
 
 /*
  * protected void loadAllTeams() { ergebnis.addClickHandler(new ClickHandler() {

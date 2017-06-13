@@ -15,7 +15,7 @@ public interface ErgebnisDienstAdministration extends RemoteService {
 	public void init() throws IllegalArgumentException;
 
 	
-	public List<Team> getAllTeams() throws IllegalArgumentException;
+	public ArrayList<Team> getAllTeams() throws IllegalArgumentException;
 
 
 	public Team findByName(String name) throws IllegalArgumentException;

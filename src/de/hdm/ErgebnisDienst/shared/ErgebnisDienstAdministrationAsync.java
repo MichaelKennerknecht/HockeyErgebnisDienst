@@ -26,7 +26,7 @@ public interface ErgebnisDienstAdministrationAsync {
 	public void findByName(String name, AsyncCallback<Team> callback);
 
 
-	void getAllTeams(AsyncCallback<List<Team>> callback);
+	void getAllTeams(AsyncCallback<ArrayList<Team>> callback);
 
 	//void getAllTeams(AsyncCallback<List<Team>> callback);
 	
