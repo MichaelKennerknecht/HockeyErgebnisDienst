@@ -92,7 +92,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * Referenz auf den DatenbankMapper, der Permissionobjekte mit der Datenbank
 	 * abgleicht.
 	 */
-	private MatchdayMapper pMapper;
+	private MatchdayMapper mMapper;
 
 	/**
 	 * Referenz auf den DatenbankMapper, der Notebookobjekte mit der Datenbank
@@ -114,7 +114,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 
 		this.uMapper = UserMapper.userMapper();
 		this.nMapper = GameEntryMapper.gameEntryMapper();
-		this.pMapper = MatchdayMapper.matchdayMapper();
+		this.mMapper = MatchdayMapper.matchdayMapper();
 				this.teMapper = TeamMapper.teamMapper();
 
 	}
@@ -129,7 +129,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * noch kein Notizbuch angelegt wird eins angelegt, zusammen mit einer
 	 * Permission.
 	 */
-	public List<Team> getAllTeams() throws IllegalArgumentException {
+	public ArrayList<Team> getAllTeams() throws IllegalArgumentException {
 //		System.out.println("Hallo bin in der Methode");
 //		List<Team> list = this.teMapper.getAllTeams();
 //		
@@ -155,6 +155,12 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	public Team findByName(String name) throws IllegalArgumentException {
 	
 		return teMapper.findByName(name);
+	}
+
+	@Override
+	public ArrayList<Matchday> getAllMatchdays() throws IllegalArgumentException {
+		
+		return mMapper.getAllMatchdays();
 	}
 	}
 

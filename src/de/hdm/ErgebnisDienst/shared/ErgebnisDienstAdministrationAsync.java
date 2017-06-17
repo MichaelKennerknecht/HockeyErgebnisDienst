@@ -28,6 +28,11 @@ public interface ErgebnisDienstAdministrationAsync {
 
 	void getAllTeams(AsyncCallback<ArrayList<Team>> callback);
 
+
+	void getAllMatchdays(AsyncCallback<ArrayList<Matchday>> callback);
+	
+	
+
 	//void getAllTeams(AsyncCallback<List<Team>> callback);
 	
 	//public void getCurrentUser(AsyncCallback<AppUser> callback)

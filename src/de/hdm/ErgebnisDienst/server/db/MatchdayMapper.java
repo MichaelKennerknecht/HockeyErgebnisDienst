@@ -49,12 +49,13 @@ public class MatchdayMapper {
 			// Neues Statement anlegen
 			Statement stmt = con.createStatement();
 			// Alle Matchdays der Tabelle werden abgefragt
-			ResultSet rs = stmt.executeQuery("SELECT md_Id, name FROM hockeydienst.matchday");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM hockeydienst.matchday");
 
 			if (rs.next()) {
-				Matchday matchday = new Matchday(null);
+				Matchday matchday = new Matchday();
 				matchday.setMdId(rs.getInt("md_id"));
 				matchday.setName(rs.getString("name"));
+				matchday.setMdCount(rs.getInt("md_count"));
 				result.add(matchday);
 			}
 		} catch (SQLException e) {
@@ -78,18 +79,18 @@ public class MatchdayMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-		//Check was der höchste Primärschlüssel ist
+		//Check was der hÃ¶chste PrimÃ¤rschlÃ¼ssel ist
 			
 		ResultSet rs = stmt
 				.executeQuery("SELECT MAX(md_id) AS maxMd_Id" 
 						+ "FROM matchday");
-		//Falls was zurückkommt, kann dies nur einzeilig sein
+		//Falls was zurÃ¼ckkommt, kann dies nur einzeilig sein
 		if (rs.next()) {
-		//Primärschlüssel um 1 erhöhen
+		//PrimÃ¤rschlÃ¼ssel um 1 erhÃ¶hen
 			matchday.setMdId(rs.getInt("maxMd_Id")+1);
 			stmt = con.createStatement();
 		
-		//Einfügeoption
+		//EinfÃ¼geoption
 			stmt.executeUpdate("INSERT INTO matchday (md_id, name, md_count)"
 					+ "VALUES ("
 					+ matchday.getMdId()

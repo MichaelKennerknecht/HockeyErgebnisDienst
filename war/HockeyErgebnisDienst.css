@@ -77,3 +77,16 @@ div#Extra {
 	width: 75px;
 	height: 75px;
 }
+
+.flexTable td {
+   border: 1px solid #BBBBBB;
+   padding: 3px;
+}
+
+.flexTable-buttonPanel td {
+   border: 0px;
+}
+
+.fixedWidthButton {
+   width: 150px;
+}

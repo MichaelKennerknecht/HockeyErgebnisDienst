@@ -2,15 +2,20 @@ package de.hdm.ErgebnisDienst.shared.bo;
 
 import java.io.Serializable;
 
-public class Matchday {
+public class Matchday implements Serializable {
 	
-	private int md_Id;
+	private static final long serialVersionUID = 1L;
+	private  int md_Id;
 	private String name;
 	private int md_count;
 
 	
 	public Matchday(String string) {
 		this.name  = string;
+	}
+
+	public Matchday() {
+		
 	}
 
 	public int getMdId() {

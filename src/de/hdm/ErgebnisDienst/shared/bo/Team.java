@@ -3,6 +3,7 @@ package de.hdm.ErgebnisDienst.shared.bo;
 import java.io.Serializable;
 
 public class Team implements Serializable { 
+	
 	private static final long serialVersionUID = 1L;
 
 	private int teamId;

@@ -13,6 +13,8 @@ import de.hdm.ErgebnisDienst.shared.bo.*;
 public interface ErgebnisDienstAdministration extends RemoteService {
 
 	public void init() throws IllegalArgumentException;
+	
+	public ArrayList<Matchday> getAllMatchdays() throws IllegalArgumentException;
 
 	
 	public ArrayList<Team> getAllTeams() throws IllegalArgumentException;

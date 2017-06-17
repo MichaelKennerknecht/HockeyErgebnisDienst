@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.thirdparty.javascript.jscomp.FunctionInformationMap.Entry;
+import com.google.gwt.user.client.Window;
 
 import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
 
@@ -49,6 +50,10 @@ public class GameEntryMapper {
 			Statement stmt = con.createStatement();
 			// Alle GameEntrys der Tabelle werden abgefragt
 			ResultSet rs = stmt.executeQuery("SELECT game_id, home_id, guest_id, goals_guest, goals_home, FROM hockeydienst.gameentry");
+			
+			
+			
+			
 
 			if (rs.next()) {
 				GameEntry entry = new GameEntry();
