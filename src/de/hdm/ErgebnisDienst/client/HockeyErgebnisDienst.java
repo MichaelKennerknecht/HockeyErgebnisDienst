@@ -69,7 +69,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	final Button ergebnis = new Button("Ergebnisse eintragen");
 	private LoginInfo loginInfo = null;
 
-	private ArrayList<Team> teams;
+	private ArrayList<Team> teams = null;
 
 	// Create a Flex Table
 	final FlexTable flexTable = new FlexTable();
@@ -232,17 +232,20 @@ public class HockeyErgebnisDienst implements EntryPoint {
 //		};
 //		return asyncCallback;
 //	}
+	
+	
 
 	private void loadTeams() {
 		adminService.getAllTeams(new AsyncCallback<ArrayList<Team>>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("FEHLER get allMatchdays: " + caught);
+				Window.alert("FEHLER ahahahahah: " + caught);
 			}
 
 			@Override
 			public void onSuccess(ArrayList<Team> result) {
-				teams = result;					
+				
+				Window.alert("klappt: " );
 
 			}
 		});
@@ -279,7 +282,8 @@ private ListBox loadListBoxTeams(){
 		flexTable.setWidget(numRows, 0, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
 		flexTable.setWidget(numRows, 1, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
 		flexTable.setWidget(numRows, 2, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
-		flexTable.setWidget(numRows, 3, loadListBoxTeams());
+		
+		//flexTable.setWidget(numRows, 3, loadListBoxTeams());
 		flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows + 1);
 	}
 
