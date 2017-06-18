@@ -51,7 +51,7 @@ public class MatchdayMapper {
 			// Alle Matchdays der Tabelle werden abgefragt
 			ResultSet rs = stmt.executeQuery("SELECT * FROM hockeydienst.matchday");
 
-			if (rs.next()) {
+			while (rs.next()) {
 				Matchday matchday = new Matchday();
 				matchday.setMdId(rs.getInt("md_id"));
 				matchday.setName(rs.getString("name"));

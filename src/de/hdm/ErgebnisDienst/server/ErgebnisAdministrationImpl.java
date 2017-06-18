@@ -18,7 +18,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 
-
 /**
  * Implementierungsklasse des Interface {@link AdministationService}. Diese
  * Klasse ist <em>die</em> Klasse, die saemtliche Applikationslogik (oder engl.
@@ -59,7 +58,6 @@ import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 
 @SuppressWarnings("serial")
 public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements ErgebnisDienstAdministration {
-
 
 	/**
 	 * Eindeutige SerialVersion ID. Wird zum Serialisieren der Klasse benoetigt.
@@ -115,7 +113,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 		this.uMapper = UserMapper.userMapper();
 		this.nMapper = GameEntryMapper.gameEntryMapper();
 		this.mMapper = MatchdayMapper.matchdayMapper();
-				this.teMapper = TeamMapper.teamMapper();
+		this.teMapper = TeamMapper.teamMapper();
 
 	}
 
@@ -129,40 +127,41 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * noch kein Notizbuch angelegt wird eins angelegt, zusammen mit einer
 	 * Permission.
 	 */
-	public ArrayList<Team> getAllTeams() throws IllegalArgumentException {
-//		System.out.println("Hallo bin in der Methode");
-//		List<Team> list = this.teMapper.getAllTeams();
-//		
-//		if (list.size() == 0) {
-//			return null;
-//		} else {
-//			return list; }
-		return null;
-					
-	}
-	
-	public Team findByName(Team name) throws IllegalArgumentException{
+	// public ArrayList<Team> getAllTeams() throws IllegalArgumentException {
+	//// System.out.println("Hallo bin in der Methode");
+	//// List<Team> list = this.teMapper.getAllTeams();
+	////
+	//// if (list.size() == 0) {
+	//// return null;
+	//// } else {
+	//// return list; }
+	// return null;
+	//
+	// }
+
+	public Team findByName(Team name) throws IllegalArgumentException {
 		System.out.println("Hallo bin in der Methode");
-		
-		if(name != null ){
+
+		if (name != null) {
 		}
 		return name;
 	}
 
-	
-
 	@Override
 	public Team findByName(String name) throws IllegalArgumentException {
-	
+
 		return teMapper.findByName(name);
 	}
 
 	@Override
 	public ArrayList<Matchday> getAllMatchdays() throws IllegalArgumentException {
-		
+
 		return mMapper.getAllMatchdays();
 	}
+
+	@Override
+	public ArrayList<Team> getAllTeams() throws IllegalArgumentException {
+
+		return teMapper.getAllTeams();
 	}
-
-	
-
+}

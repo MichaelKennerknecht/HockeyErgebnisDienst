@@ -39,13 +39,14 @@ div#TopLevelFrame {
 }
 
 div#Details {
+	
 	margin-left: 20em;
-	min-height: 580px;
+	min-height: 400px;
 	max-height: 500px;
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
-	border-left: 1px dashed silver;
-	overflow: scroll;
+	border-left: 1px da
+
 }
 
 div#Navigator {
@@ -74,9 +75,10 @@ div#Extra {
 
 .image {
 	
-	float: left;
-	width: 85px;
-	height: 85px;
+	margin-right: 5px;
+	float: bottom;
+	width: 75px;
+	height: 75px;
 }
 
 .flexTable td {

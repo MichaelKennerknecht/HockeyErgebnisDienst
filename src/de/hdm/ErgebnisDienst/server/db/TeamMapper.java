@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import de.hdm.ErgebnisDienst.server.db.DBConnection;
-
+import de.hdm.ErgebnisDienst.shared.bo.Matchday;
 import de.hdm.ErgebnisDienst.shared.bo.Team;
 
 public class TeamMapper {
@@ -80,48 +81,31 @@ public class TeamMapper {
 		return null;
 	}
 
-/*	public List<Team> getAllTeams() {
-		
-		Connection con = DBConnection.connection();
-		List<Team> teamlist = new LinkedList<Team>();
-		try {
-			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT team_id, name FROM `teams` ");
-		
-			
-			while (rs.next()) {
-				System.out.println("NAME RS: "+rs.getString("name"));
-				System.out.println("RESULTSET: "+rs.getFetchSize());
-				Team t = new Team();
-				t.setName(rs.getString("name"));
-				t.setTeamId(rs.getInt("team_id"));
-				teamlist.add(t);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("SQL Abfrage fehlgeschlagen. ");
-			e.printStackTrace();
-
-			return null;
-		}
-		return teamlist;
-		
-	}
-*/
 	/**
-	 * public List<Team> getAllTeams() { Connection con =
-	 * DBConnection.connection(); List<Team> result = new LinkedList<Team>();
-	 * try { // Neues Statement anlegen Statement stmt = con.createStatement();
-	 * // Alle Teams der Tabelle werden abgefragt ResultSet rs =
-	 * stmt.executeQuery("SELECT team_Id, name FROM hockeydienst.teams");
-	 * 
-	 * if (rs.next()) { Team team = new Team();
-	 * team.setTeamId(rs.getInt("team_Id")); team.setName(rs.getString("name"));
-	 * result.add(team); } } catch (SQLException e) { e.printStackTrace(); } //
-	 * Teams in der Liste ausgeben return result;
-	 * 
-	 * }
-	 **/
+	 * Alle Matchdays aufrufen
+	 *
+	 */
+	public ArrayList<Team> getAllTeams() {
+		Connection con = DBConnection.connection();
+		ArrayList<Team> result = new ArrayList<Team>();
+		try {
+			// Neues Statement anlegen
+			Statement stmt = con.createStatement();
+			// Alle Teams der Tabelle werden abgefragt
+			ResultSet rs = stmt.executeQuery("SELECT * FROM hockeydienst.teams");
 
+			while (rs.next()) {
+				Team team = new Team();
+				team.setTeamId(rs.getInt("team_id"));
+				team.setName(rs.getString("name"));
+				result.add(team);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// Teams in der Liste ausgeben
+		return result;
+
+	}
 }
