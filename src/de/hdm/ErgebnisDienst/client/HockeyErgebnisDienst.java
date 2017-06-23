@@ -1,11 +1,13 @@
 package de.hdm.ErgebnisDienst.client;
 
+import de.hdm.ErgebnisDienst.client.gui.Home;
+import de.hdm.ErgebnisDienst.client.gui.Impressum;
+import de.hdm.ErgebnisDienst.client.gui.Update;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
 import de.hdm.ErgebnisDienst.shared.LoginInfo;
 import de.hdm.ErgebnisDienst.shared.bo.Matchday;
 import de.hdm.ErgebnisDienst.shared.bo.Team;
-import de.hdm.ErgebnisDienst.client.Home;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Anchor;
@@ -54,19 +55,21 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	// Proxy Objekt
 	private ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
 
+	
+	// Erstellung aller Panels
 	private VerticalPanel navigator = new VerticalPanel();
 	private VerticalPanel details = new VerticalPanel();
-	private VerticalPanel matchdays = new VerticalPanel();
 	private HorizontalPanel topPanel = new HorizontalPanel();
-
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private VerticalPanel loginTextPanel = new VerticalPanel();
+	
 	private Label loginLabel = new Label("Bitte loggen Sie sich mit Ihrem Google-Account ein:");
 	public static Label userLabel = new Label();
 	final Label usernameLabel = new Label("Username");
 	final Label passwordLabel = new Label("Password");
 	private Anchor signInLink = new Anchor("Login");
 	final Button ergebnis = new Button("Ergebnisse eintragen");
+	final Button impressumButton = new Button("Impressum");
 	private LoginInfo loginInfo = null;
 
 	private ArrayList<Team> teams = null;
@@ -91,8 +94,9 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		RootPanel.get("Top").add(topPanel);
 		RootPanel.get("Details").add(new Home());
 		RootPanel.get("Details").add(flexTable);
+		RootPanel.get("Extra").add(impressumButton);
 
-		// Beginn Flextable für Ergebnisse
+		// Flextable für Ergebnisse
 
 		flexTable.addStyleName("flexTable");
 		flexTable.setWidth("32em");
@@ -297,42 +301,38 @@ private ListBox loadListBoxTeams(){
 			flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows - 1);
 		}
 
-		// Navigator-Tabelle
+		//Dem Impressum-Button einen ClickHandler hinzufügen  
+
+	    impressumButton.addClickHandler(new ClickHandler() {
+		  	public void onClick(ClickEvent event) {
+		          /*
+		           * Showcase instantiieren.
+		           */
+		          Update update = new Impressum();
+		          RootPanel.get("Extra").clear();
+		          RootPanel.get("Extra").add(update);
+		    }
+		    });	 
 
 	}
 
-	private void loadLogin() {
-
-		Cookies.setCookie("usermail", null);
-		RootPanel.get("Top").add(topPanel);
-		loginTextPanel.add(loginLabel);
-		loginTextPanel.add(signInLink);
-		loginTextPanel.setStyleName("loginTextPanel");
-
-		// loginTextPanel.add(usernameLabel);
-		// loginTextPanel.add(usernameBox);
-		// loginTextPanel.add(passwordLabel);
-		// loginTextPanel.add(passwordBox);
-		loginPanel.add(loginTextPanel);
-
-		Cookies.setCookie("userMail", null);
-		Cookies.setCookie("userID", null);
-		RootPanel.get("Details").clear();
-		RootPanel.get("Details").add(loginPanel);
-	};
+//	private void loadLogin() {
+//
+//		Cookies.setCookie("usermail", null);
+//		RootPanel.get("Top").add(topPanel);
+//		loginTextPanel.add(loginLabel);
+//		loginTextPanel.add(signInLink);
+//		loginTextPanel.setStyleName("loginTextPanel");
+//
+//		// loginTextPanel.add(usernameLabel);
+//		// loginTextPanel.add(usernameBox);
+//		// loginTextPanel.add(passwordLabel);
+//		// loginTextPanel.add(passwordBox);
+//		loginPanel.add(loginTextPanel);
+//
+//		Cookies.setCookie("userMail", null);
+//		Cookies.setCookie("userID", null);
+//		RootPanel.get("Details").clear();
+//		RootPanel.get("Details").add(loginPanel);
+//	};
 }
-
-/*
- * protected void loadAllTeams() { ergebnis.addClickHandler(new ClickHandler() {
- * private void onClick(ClickEvent event) {
- * 
- * System.out.println();
- * 
- * } }); }
- */
-// add style names to widgets
-// ergebnis.setStylePrimaryName("ergebnisButton");
-
-// Image startImage = new Image("/images/HdM_Logo.jpg");
-// startImage.setStylePrimaryName("image");
-// navigator.add(startImage);

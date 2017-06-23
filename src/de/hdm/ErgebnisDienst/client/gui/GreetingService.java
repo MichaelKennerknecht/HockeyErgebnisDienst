@@ -1,4 +1,4 @@
-package de.hdm.ErgebnisDienst.client;
+package de.hdm.ErgebnisDienst.client.gui;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

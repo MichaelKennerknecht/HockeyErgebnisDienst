@@ -1,4 +1,4 @@
-package de.hdm.ErgebnisDienst.client;
+package de.hdm.ErgebnisDienst.client.gui;
 
 import com.google.gwt.user.client.ui.HTML;
 
@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.HTML;
  * Home bietet ein Showcase um die Begrüßungsfläche
  * darstellen zu können.
 **/
-public class Home extends Showcase {
+public class Home extends Update {
 	/**
 	 * Überschrift des Showcase (graue Überschrift)
 	 */

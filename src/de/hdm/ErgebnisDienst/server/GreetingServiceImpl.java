@@ -1,6 +1,6 @@
 package de.hdm.ErgebnisDienst.server;
 
-import de.hdm.ErgebnisDienst.client.GreetingService;
+import de.hdm.ErgebnisDienst.client.gui.GreetingService;
 import de.hdm.ErgebnisDienst.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

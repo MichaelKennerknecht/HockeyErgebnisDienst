@@ -1,4 +1,4 @@
-package de.hdm.ErgebnisDienst.client;
+package de.hdm.ErgebnisDienst.client.gui;
 
 import com.google.gwt.user.client.ui.*;
 
@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.*;
  */
 
 
-public abstract class Showcase extends VerticalPanel {
+public abstract class Update extends VerticalPanel {
 
 	/**
 	   * Jedes GWT Widget muss diese Methode implementieren. Sie gibt an, sas
