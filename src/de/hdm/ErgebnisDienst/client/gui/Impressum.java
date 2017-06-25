@@ -45,10 +45,10 @@ public class Impressum extends Update{
 		this.append("");
 		
 		
-		logoImpressum.setStyleName("logoImpressum");
-		impressumPanel.setStyleName("detailsPanel");
-		headlinePanel.setStyleName("headlinePanel");
-		
+//		logoImpressum.setStyleName("logoImpressum");
+//		impressumPanel.setStyleName("detailsPanel");
+//		headlinePanel.setStyleName("headlinePanel");
+//		
 		headlinePanel.add(mainheadline);
 		textPanel.add(logoImpressum);
 		textPanel.add(adress);

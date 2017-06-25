@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.google.gwt.thirdparty.javascript.jscomp.FunctionInformationMap.Entry;
 import com.google.gwt.user.client.Window;
 
 import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
+import de.hdm.ErgebnisDienst.shared.bo.Matchday;
 
 public class GameEntryMapper {
 	/**
@@ -42,26 +44,28 @@ public class GameEntryMapper {
 	*Alle Ergebnisse aufrufen
 	*
 	*/
-	public List<GameEntry> getAllGameEntrys() {
+	public ArrayList<GameEntry> getAllGameEntrys(Matchday md) {
 		Connection con = DBConnection.connection();
-		List<GameEntry> result = new LinkedList<GameEntry>();
+		ArrayList<GameEntry> result = new ArrayList<GameEntry>();
 		try {
 			// Neues Statement anlegen
 			Statement stmt = con.createStatement();
 			// Alle GameEntrys der Tabelle werden abgefragt
-			ResultSet rs = stmt.executeQuery("SELECT game_id, home_id, guest_id, goals_guest, goals_home, FROM hockeydienst.gameentry");
+			ResultSet rs = stmt.executeQuery("SELECT game_id, home_id, (SELECT name FROM hockeydienst.teams WHERE team_id = home_id) AS home_name, guest_id, (SELECT name FROM hockeydienst.teams WHERE team_id = guest_id) AS guest_name, goals_guest, goals_home, matchday_id FROM hockeydienst.gameentry WHERE matchday_id = " + md.getMdId());
 			
+			//TODO
+			//home,guest name anpassen
 			
-			
-			
-
 			if (rs.next()) {
 				GameEntry entry = new GameEntry();
 				entry.setGameId(rs.getInt("game_id"));
 				entry.setHomeId(rs.getInt("home_id"));
 				entry.setGuestId(rs.getInt("guest_id"));
+				//entry.setHomeName(rs.getString("home_name"));
+				//entry.setGuestName(rs.getString("guest_name"));
 				entry.setGoalsGuest(rs.getInt("goals_guest"));
 				entry.setGoalsHome(rs.getInt("goals_home"));
+				entry.setMatchday(rs.getInt("matchday_id"));
 				result.add(entry);
 			}
 		} catch (SQLException e) {

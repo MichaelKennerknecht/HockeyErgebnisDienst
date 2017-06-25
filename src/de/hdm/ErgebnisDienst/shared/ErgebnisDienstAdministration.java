@@ -21,6 +21,8 @@ public interface ErgebnisDienstAdministration extends RemoteService {
 
 
 	public Team findByName(String name) throws IllegalArgumentException;
+	
+	public ArrayList<GameEntry> getAllGameEntrys(Matchday md) throws IllegalArgumentException;
 
 
 	//public AppUser getCurrentUser() throws IllegalArgumentException;

@@ -1,7 +1,9 @@
 package de.hdm.ErgebnisDienst.client;
 
+import de.hdm.ErgebnisDienst.client.gui.CreateGameEntry;
 import de.hdm.ErgebnisDienst.client.gui.Home;
 import de.hdm.ErgebnisDienst.client.gui.Impressum;
+import de.hdm.ErgebnisDienst.client.gui.MatchDay;
 import de.hdm.ErgebnisDienst.client.gui.Update;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
@@ -53,7 +55,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	// Proxy Objekt
-	private ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
+	public static ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
 
 	
 	// Erstellung aller Panels
@@ -68,15 +70,15 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	final Label usernameLabel = new Label("Username");
 	final Label passwordLabel = new Label("Password");
 	private Anchor signInLink = new Anchor("Login");
-	final Button ergebnis = new Button("Ergebnisse eintragen");
 	final Button impressumButton = new Button("Impressum");
+	final Button startseite = new Button ("Startseite");
 	private LoginInfo loginInfo = null;
 
 	private ArrayList<Team> teams = null;
 
 	// Create a Flex Table
-	final FlexTable flexTable = new FlexTable();
-	FlexCellFormatter cellFormatter = flexTable.getFlexCellFormatter();
+	//final FlexTable flexTable = new FlexTable();
+	//FlexCellFormatter cellFormatter = flexTable.getFlexCellFormatter();
 
 	de.hdm.ErgebnisDienst.client.gui.LoginServiceAsync loginService = GWT
 			.create(de.hdm.ErgebnisDienst.client.gui.LoginService.class);
@@ -87,157 +89,120 @@ public class HockeyErgebnisDienst implements EntryPoint {
 	 */
 
 	public void onModuleLoad() {
-		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß!");
-
+		Window.alert("Willkommen zum Hockey Ergebnisdienst, viel Spaß!");	
+		
 		// Add the widgets to the root panel
-		RootPanel.get("Navigator").add(ergebnis);
+		RootPanel.get("Top").add(startseite);
 		RootPanel.get("Top").add(topPanel);
 		RootPanel.get("Details").add(new Home());
-		RootPanel.get("Details").add(flexTable);
+		//RootPanel.get("Details").add(flexTable);
 		RootPanel.get("Extra").add(impressumButton);
+		
+		
+		//MatchDay Tabelle zu Beginn laden
+		
+		MatchDay matchday = new MatchDay();
+		RootPanel.get("Navigator").add(matchday);
+		
+		//Dem Impressum-Button einen ClickHandler hinzufügen  
 
-		// Flextable für Ergebnisse
+	    impressumButton.addClickHandler(new ClickHandler() {
+		  	public void onClick(ClickEvent event) {
+		          /*
+		           * Showcase instantiieren.
+		           */
+		          Update update = new Impressum();
+		          RootPanel.get("Extra").clear();
+		          RootPanel.get("Extra").add(impressumButton);
+		          RootPanel.get("Extra").add(update);
+		    }
+		    });	 
 
-		flexTable.addStyleName("flexTable");
-		flexTable.setWidth("32em");
-		flexTable.setCellSpacing(5);
-		flexTable.setCellPadding(3);
+	  //Dem Startseite-Button einen ClickHandler hinzufügen  
+	    
+	    startseite.addClickHandler(new ClickHandler() {
+		  	public void onClick(ClickEvent event) {
+		          /*
+		           * Showcase instantiieren.
+		           */
+		          Update update = new Home();
+		          RootPanel.get("Details").clear();
+		          RootPanel.get("Details").add(update);
+		    }
+		    });	 
+	
+	  //Dem Ergebnis-Button einen ClickHandler hinzufügen  
 
-		// Add some text
-		cellFormatter.setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
-		flexTable.setHTML(0, 0, "Ergebnisse");
-		cellFormatter.setColSpan(0, 0, 5);
-
-		// Add a button that will add more rows to the table
-		Button addRowButton = new Button("Ergebnis hinzufügen");
-		addRowButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				addRow(flexTable);
-			}
-		});
-
-		addRowButton.addStyleName("fixedWidthButton");
-
-		// Add a button that will add more rows to the table
-		Button removeRowButton = new Button("Ergebnis löschen");
-		removeRowButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				removeRow(flexTable);
-			}
-		});
-
-		removeRowButton.addStyleName("fixedWidthButton");
-
-		VerticalPanel buttonPanel = new VerticalPanel();
-		buttonPanel.setStyleName("flexTable-buttonPanel");
-		buttonPanel.add(addRowButton);
-		buttonPanel.add(removeRowButton);
-		flexTable.setWidget(0, 1, buttonPanel);
-		cellFormatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
-
-		// Example rows for the beginning
-		addRow(flexTable);
-
-		getMatchdayTable();
+	   
+			
+	//getMatchdayTable();
 
 	}
 
-	/**
-	 * Add a row to the flex table.
-	 */
-
-	public void getMatchdayTable() {
-
-		// Datensätze aus der Datenbank in List schreiben.
-		adminService.getAllMatchdays(new AsyncCallback<ArrayList<Matchday>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("FEHLER get allMatchdays: " + caught);
-
-			}
-
-			@Override
-			public void onSuccess(ArrayList<Matchday> result) {
-				Window.alert("OnSuccess");
-				ArrayList<Matchday> MATCHDAYS = result;
-				CellTable<Matchday> table = new CellTable<Matchday>();
-				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
-				// Add a text column to show the name.
-				TextColumn<Matchday> nameColumn = new TextColumn<Matchday>() {
-
-					@Override
-					public String getValue(Matchday object) {
-						return object.getName();
-
-					}
-				};
-				table.addColumn(nameColumn, "Spieltage");
-
-				// Add a selection model to handle user selection.
-				final SingleSelectionModel<Matchday> selectionModel = new SingleSelectionModel<Matchday>();
-				table.setSelectionModel(selectionModel);
-				selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-					public void onSelectionChange(SelectionChangeEvent event) {
-						Matchday selected = selectionModel.getSelectedObject();
-						if (selected != null) {
-							Window.alert("You selected: " + selected.getName());
-						}
-					}
-				});
-
-				// Set the total row count. This isn't strictly necessary,
-				// but it affects paging calculations, so its good habit to
-				// keep the row count up to date.
-				table.setRowCount(MATCHDAYS.size(), true);
-
-				// Push the data into the widget.
-
-				// table.setRowData(0, MATCHDAYS);
-				table.setRowData(MATCHDAYS);
-
-				VerticalPanel panel = new VerticalPanel();
-				panel.setBorderWidth(1);
-				panel.setWidth("105");
-				panel.add(table);
-
-				// Add the widgets to the root panel.
-				RootPanel.get("Navigator").add(panel);
-			}
-		});
-
-		// Create a CellTable.
-
-	}
-
-//	private AsyncCallback<ArrayList<Team>> getTeamsCallback() {
-//		AsyncCallback<ArrayList<Team>> asyncCallback = new AsyncCallback<ArrayList<Team>>() {
+	
+//	public void getMatchdayTable() {
+//
+//		// Datensätze aus der Datenbank in List schreiben.
+//		adminService.getAllMatchdays(new AsyncCallback<ArrayList<Matchday>>() {
 //
 //			@Override
 //			public void onFailure(Throwable caught) {
 //				Window.alert("FEHLER get allMatchdays: " + caught);
+//
 //			}
 //
 //			@Override
-//			public void onSuccess(ArrayList<Team> result) {
+//			public void onSuccess(ArrayList<Matchday> result) {
+//				ArrayList<Matchday> MATCHDAYS = result;
+//				CellTable<Matchday> table = new CellTable<Matchday>();
+//				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 //
-//				@Override
-//				public String getValue(Team object) {
-//					return object.getName();
+//				// Add a text column to show the name.
+//				TextColumn<Matchday> nameColumn = new TextColumn<Matchday>() {
 //
-//				}
-//				// Window.alert(result.get(0).getName());
-//				// teams = result;
+//					@Override
+//					public String getValue(Matchday object) {
+//						return object.getName();
 //
+//					}
+//				};
+//				table.addColumn(nameColumn, "Spieltagsübersicht");
+//
+//				// Add a selection model to handle user selection.
+//				final SingleSelectionModel<Matchday> selectionModel = new SingleSelectionModel<Matchday>();
+//				table.setSelectionModel(selectionModel);
+//				selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+//					public void onSelectionChange(SelectionChangeEvent event) {
+//						Matchday selected = selectionModel.getSelectedObject();
+//						if (selected != null) {
+//							Window.alert("You selected: " + selected.getName());
+//						}
+//					}
+//				});
+//
+//				// Set the total row count. This isn't strictly necessary,
+//				// but it affects paging calculations, so its good habit to
+//				// keep the row count up to date.
+//				table.setRowCount(MATCHDAYS.size(), true);
+//
+//				// Push the data into the widget.
+//
+//				// table.setRowData(0, MATCHDAYS);
+//				table.setRowData(MATCHDAYS);
+//
+//				VerticalPanel panel = new VerticalPanel();
+//				panel.setBorderWidth(1);
+//				panel.setWidth("105");
+//				panel.add(table);
+//
+//				// Add the widgets to the root panel.
+//				RootPanel.get("Navigator").add(panel);
 //			}
-//		};
-//		return asyncCallback;
+//		});
+
+	
 //	}
-	
-	
+
 
 	private void loadTeams() {
 		adminService.getAllTeams(new AsyncCallback<ArrayList<Team>>() {
@@ -255,14 +220,14 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		});
 	}
 
-private ListBox loadListBoxTeams(){
-	loadTeams();
-	ListBox lb = new ListBox();	
-	for(Team te: teams){
-		lb.addItem(te.getName());
-	}
-	return lb;
-}
+//private ListBox loadListBoxTeams(){
+//	loadTeams();
+//	ListBox lb = new ListBox();	
+//	for(Team te: teams){
+//		lb.addItem(te.getName());
+//	}
+//	return lb;
+//}
 	
 
 	// adminService.getAllTeams(new AsyncCallback<ArrayList<Team>>() {
@@ -281,58 +246,25 @@ private ListBox loadListBoxTeams(){
 	// }
 	// });
 
-	private void addRow(FlexTable flexTable) {
-		int numRows = flexTable.getRowCount();
-		flexTable.setWidget(numRows, 0, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
-		flexTable.setWidget(numRows, 1, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
-		flexTable.setWidget(numRows, 2, new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
-		
-		//flexTable.setWidget(numRows, 3, loadListBoxTeams());
-		flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows + 1);
-	}
+	
 
-	/**
-	 * Remove a row from the flex table.
-	 */
-	private void removeRow(FlexTable flexTable) {
-		int numRows = flexTable.getRowCount();
-		if (numRows > 1) {
-			flexTable.removeRow(numRows - 1);
-			flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows - 1);
-		}
+		private void loadLogin() {
 
-		//Dem Impressum-Button einen ClickHandler hinzufügen  
+		Cookies.setCookie("usermail", null);
+		RootPanel.get("Top").add(topPanel);
+		loginTextPanel.add(loginLabel);
+		loginTextPanel.add(signInLink);
+		loginTextPanel.setStyleName("loginTextPanel");
 
-	    impressumButton.addClickHandler(new ClickHandler() {
-		  	public void onClick(ClickEvent event) {
-		          /*
-		           * Showcase instantiieren.
-		           */
-		          Update update = new Impressum();
-		          RootPanel.get("Extra").clear();
-		          RootPanel.get("Extra").add(update);
-		    }
-		    });	 
+		// loginTextPanel.add(usernameLabel);
+		// loginTextPanel.add(usernameBox);
+		// loginTextPanel.add(passwordLabel);
+		// loginTextPanel.add(passwordBox);
+		loginPanel.add(loginTextPanel);
 
-	}
-
-//	private void loadLogin() {
-//
-//		Cookies.setCookie("usermail", null);
-//		RootPanel.get("Top").add(topPanel);
-//		loginTextPanel.add(loginLabel);
-//		loginTextPanel.add(signInLink);
-//		loginTextPanel.setStyleName("loginTextPanel");
-//
-//		// loginTextPanel.add(usernameLabel);
-//		// loginTextPanel.add(usernameBox);
-//		// loginTextPanel.add(passwordLabel);
-//		// loginTextPanel.add(passwordBox);
-//		loginPanel.add(loginTextPanel);
-//
-//		Cookies.setCookie("userMail", null);
-//		Cookies.setCookie("userID", null);
-//		RootPanel.get("Details").clear();
-//		RootPanel.get("Details").add(loginPanel);
-//	};
+		Cookies.setCookie("userMail", null);
+		Cookies.setCookie("userID", null);
+		RootPanel.get("Details").clear();
+		RootPanel.get("Details").add(loginPanel);
+	};
 }

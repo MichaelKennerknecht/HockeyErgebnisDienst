@@ -32,7 +32,7 @@ public interface ErgebnisDienstAdministrationAsync {
 	void getAllMatchdays(AsyncCallback<ArrayList<Matchday>> callback);
 	
 	
-
+	void getAllGameEntrys(Matchday md, AsyncCallback<ArrayList<GameEntry>> callback);
 	//void getAllTeams(AsyncCallback<List<Team>> callback);
 	
 	//public void getCurrentUser(AsyncCallback<AppUser> callback)
