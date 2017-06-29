@@ -37,5 +37,9 @@ public interface ErgebnisDienstAdministrationAsync {
 	
 	//public void getCurrentUser(AsyncCallback<AppUser> callback)
 	
+	void saveGameEntry(GameEntry ge, AsyncCallback<Boolean> callback);
+	
+
+	void deleteGameEntry(GameEntry ge, AsyncCallback<Boolean> callback);
 	
 }

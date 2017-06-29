@@ -110,7 +110,7 @@ public class CreateGameEntry extends Update {
 				Widget wTeam2 = flexTable.getWidget(1, 1);
 				Widget wErgebnis = flexTable.getWidget(1, 2);
 				
-				
+				GameEntry ge = null;
 				if (wTeam1 instanceof ListBox && wTeam2 instanceof ListBox && wErgebnis instanceof TextBox) {
 					ListBox lbTeam1 = (ListBox)wTeam1;
 					ListBox lbTeam2 = (ListBox)wTeam2;
@@ -122,10 +122,17 @@ public class CreateGameEntry extends Update {
 					if (sErgebnis.contains(":")) {
 						String sGoalHome = sErgebnis.substring(0,sErgebnis.indexOf(":"));
 						String sGoalGuest = sErgebnis.substring(sErgebnis.indexOf(":")+1); 
+						int goalsGuest = Integer.parseInt(sGoalGuest.trim());
+						int goalsHome = Integer.parseInt(sGoalHome.trim());
 						
 						// TODO sGoal... in Int umwandeln für DB
 						int numRows = flexTable.getRowCount();
-						
+						ge = new GameEntry();
+						ge.setMatchday(matchday.getMdId());
+						ge.setGoalsGuest(goalsGuest);
+						ge.setGoalsHome(goalsHome);
+						ge.setHome_name(sTeam1);
+						ge.setGuest_name(sTeam2);
 						flexTable.setWidget(numRows, 0, new HTML(sTeam1));
 						flexTable.setWidget(numRows, 1, new HTML(sTeam2));
 						flexTable.setWidget(numRows, 2, new HTML(sGoalHome + ":" + sGoalGuest));
@@ -133,33 +140,33 @@ public class CreateGameEntry extends Update {
 					}
 					
 					//TODO Speichere Ergebnisse in DB
-				//	GameEntry ge = new GameEntry();
-					//ge.setHomeName()
-					//HockeyErgebnisDienst.adminService.saveGameEntry(ge)
-					// in save MEthode zuerst SQL Abfrage für Team Id SELECT team_id FROM teams WHERE name LIKE '"+ge.getHomeName()+"'
-					// int team1 = rs.getInt("team_id")
-					// SQL Befehl "INSERT INTO gameentry (team1, team2, ergebnis..)
+					
+					if (ge != null) {
+						HockeyErgebnisDienst.adminService.saveGameEntry(ge, new AsyncCallback<Boolean>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								Window.alert("FEHLER: " + caught);
+							}
+	
+							@Override
+							public void onSuccess(Boolean result) {
+								Window.alert("Erfolgreich gespeichert!");
+								
+							}
+						});
+					}
 				}
 			}
 		});
 		// Ergebnislöschen-Button
 		addRowButton.addStyleName("fixedWidthButton");
 
-		// Add a button that will add more rows to the table
-		Button removeRowButton = new Button("Ergebnis löschen");
-		removeRowButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				removeRow(flexTable);
-			}
-		});
+		
 
-		removeRowButton.addStyleName("fixedWidthButton");
 
 		VerticalPanel buttonPanel = new VerticalPanel();
 		buttonPanel.setStyleName("flexTable-buttonPanel");
 		buttonPanel.add(addRowButton);
-		buttonPanel.add(removeRowButton);
 		flexTable.setWidget(0, 1, buttonPanel);
 		cellFormatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
 
@@ -196,6 +203,8 @@ public class CreateGameEntry extends Update {
 				flexTable.setWidget(1, 0, team1);
 				flexTable.setWidget(1, 1, team2);
 				flexTable.setWidget(1, 2, new TextBox());
+				
+				
 			}
 		});
 		
@@ -219,9 +228,21 @@ public class CreateGameEntry extends Update {
 					if (numRows < 2) {
 						numRows = 2; 
 					}
-					flexTable.setWidget(numRows, 0, new HTML(""+ge.getHomeName()));
-					flexTable.setWidget(numRows, 1, new HTML(""+ge.getGuestName()));
+					flexTable.setWidget(numRows, 0, new HTML(""+ge.getHome_name()));
+					flexTable.setWidget(numRows, 1, new HTML(""+ge.getGuest_name()));
 					flexTable.setWidget(numRows, 2, new HTML(ge.getGoalsHome() + ":" +ge.getGoalsGuest()));
+					// Add a button that will add more rows to the table
+					Button removeRowButton = new Button("Ergebnis löschen");
+
+					removeRowButton.addStyleName("fixedWidthButton");
+					removeRowButton.addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							removeRow(flexTable,event);
+						}
+					});
+					
+					flexTable.setWidget(numRows, 3, removeRowButton);
 				}
 			}
 		});
@@ -234,13 +255,38 @@ public class CreateGameEntry extends Update {
 	/**
 	 * Remove a row from the flex table.
 	 */
-	private void removeRow(FlexTable flexTable) {
-		int numRows = flexTable.getRowCount();
-		if (numRows > 1) {
-			flexTable.removeRow(numRows - 1);
-			flexTable.getFlexCellFormatter().setRowSpan(0, 1, numRows - 1);
-		}
+	private void removeRow(FlexTable flexTable, ClickEvent event) {
+		int rowIndex = flexTable.getCellForEvent(event).getRowIndex();
+		Widget wHomeTeam = flexTable.getWidget(rowIndex, 0);
+		Widget wGuestTeam = flexTable.getWidget(rowIndex, 1);
+		
+		if (wHomeTeam instanceof HTML && wGuestTeam instanceof HTML) {
+			HTML hHomeTeam = (HTML)wHomeTeam;
+			HTML hGuestTeam = (HTML)wGuestTeam;
+			
+			GameEntry ge = new GameEntry();
+			
+			String sHomeTeam = hHomeTeam.getText();
+			String sGuestTeam = hGuestTeam.getText();
+			ge.setHome_name(sHomeTeam);
+			ge.setGuest_name(sGuestTeam);
+			
+			HockeyErgebnisDienst.adminService.deleteGameEntry(ge, new AsyncCallback<Boolean>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("FEHLER: " + caught);
+				}
 
+				@Override
+				public void onSuccess(Boolean result) {
+					Window.alert("Erfolgreich gelöscht!");
+					
+				}
+			});
+		}
+		
+        flexTable.removeRow(rowIndex);
+        
 	}
 	
 }

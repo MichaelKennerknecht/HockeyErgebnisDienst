@@ -12,6 +12,8 @@ public class GameEntry implements Serializable {
 	private int goals_Home;
 	private int goals_Guest;
 	private int matchday;
+	private String home_name;
+	private String guest_name;
 	
 	public int getGameId() {
 		return game_Id;
@@ -51,6 +53,18 @@ public class GameEntry implements Serializable {
 	}
 	public void setMatchday (int matchday) {
 		this.matchday = matchday;
+	}
+	public String getHome_name() {
+		return home_name;
+	}
+	public void setHome_name(String home_name) {
+		this.home_name = home_name;
+	}
+	public String getGuest_name() {
+		return guest_name;
+	}
+	public void setGuest_name(String guest_name) {
+		this.guest_name = guest_name;
 	}
 	
 	

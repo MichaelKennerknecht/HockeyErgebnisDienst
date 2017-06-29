@@ -131,77 +131,7 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		    }
 		    });	 
 	
-	  //Dem Ergebnis-Button einen ClickHandler hinzufügen  
-
-	   
-			
-	//getMatchdayTable();
-
 	}
-
-	
-//	public void getMatchdayTable() {
-//
-//		// Datensätze aus der Datenbank in List schreiben.
-//		adminService.getAllMatchdays(new AsyncCallback<ArrayList<Matchday>>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				Window.alert("FEHLER get allMatchdays: " + caught);
-//
-//			}
-//
-//			@Override
-//			public void onSuccess(ArrayList<Matchday> result) {
-//				ArrayList<Matchday> MATCHDAYS = result;
-//				CellTable<Matchday> table = new CellTable<Matchday>();
-//				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-//
-//				// Add a text column to show the name.
-//				TextColumn<Matchday> nameColumn = new TextColumn<Matchday>() {
-//
-//					@Override
-//					public String getValue(Matchday object) {
-//						return object.getName();
-//
-//					}
-//				};
-//				table.addColumn(nameColumn, "Spieltagsübersicht");
-//
-//				// Add a selection model to handle user selection.
-//				final SingleSelectionModel<Matchday> selectionModel = new SingleSelectionModel<Matchday>();
-//				table.setSelectionModel(selectionModel);
-//				selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-//					public void onSelectionChange(SelectionChangeEvent event) {
-//						Matchday selected = selectionModel.getSelectedObject();
-//						if (selected != null) {
-//							Window.alert("You selected: " + selected.getName());
-//						}
-//					}
-//				});
-//
-//				// Set the total row count. This isn't strictly necessary,
-//				// but it affects paging calculations, so its good habit to
-//				// keep the row count up to date.
-//				table.setRowCount(MATCHDAYS.size(), true);
-//
-//				// Push the data into the widget.
-//
-//				// table.setRowData(0, MATCHDAYS);
-//				table.setRowData(MATCHDAYS);
-//
-//				VerticalPanel panel = new VerticalPanel();
-//				panel.setBorderWidth(1);
-//				panel.setWidth("105");
-//				panel.add(table);
-//
-//				// Add the widgets to the root panel.
-//				RootPanel.get("Navigator").add(panel);
-//			}
-//		});
-
-	
-//	}
 
 
 	private void loadTeams() {
@@ -220,33 +150,6 @@ public class HockeyErgebnisDienst implements EntryPoint {
 		});
 	}
 
-//private ListBox loadListBoxTeams(){
-//	loadTeams();
-//	ListBox lb = new ListBox();	
-//	for(Team te: teams){
-//		lb.addItem(te.getName());
-//	}
-//	return lb;
-//}
-	
-
-	// adminService.getAllTeams(new AsyncCallback<ArrayList<Team>>() {
-	// @Override
-	// public void onFailure(Throwable caught) {
-	// Window.alert("FEHLER get allMatchdays: " + caught);
-	//
-	// }
-	//
-	// public void onSuccess(ArrayList<Team> result) {
-	// ListBox lb = new ListBox();
-	// for (Team te : result) {
-	// lb.addItem(te.getName());
-	// lbx = lb;
-	// }
-	// }
-	// });
-
-	
 
 		private void loadLogin() {
 

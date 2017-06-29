@@ -165,7 +165,19 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 		return teMapper.getAllTeams();
 	}
 	
+	@Override
 	public ArrayList<GameEntry> getAllGameEntrys(Matchday md) throws IllegalArgumentException {
 		return nMapper.getAllGameEntrys(md);
+	}
+	
+	@Override
+	public boolean saveGameEntry(GameEntry ge) throws IllegalArgumentException {
+		return nMapper.saveGameEntry(ge);
+	}
+	
+
+	@Override
+	public boolean deleteGameEntry(GameEntry ge) throws IllegalArgumentException {
+		return nMapper.deleteGameEntry(ge);
 	}
 }

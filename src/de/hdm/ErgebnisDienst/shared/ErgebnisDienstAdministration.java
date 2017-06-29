@@ -24,6 +24,10 @@ public interface ErgebnisDienstAdministration extends RemoteService {
 	
 	public ArrayList<GameEntry> getAllGameEntrys(Matchday md) throws IllegalArgumentException;
 
+	public boolean saveGameEntry(GameEntry ge) throws IllegalArgumentException;
+	
+	public boolean deleteGameEntry(GameEntry ge) throws IllegalArgumentException;
+
 
 	//public AppUser getCurrentUser() throws IllegalArgumentException;
 

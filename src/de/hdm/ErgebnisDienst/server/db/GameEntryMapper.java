@@ -56,13 +56,13 @@ public class GameEntryMapper {
 			//TODO
 			//home,guest name anpassen
 			
-			if (rs.next()) {
+			while (rs.next()) {
 				GameEntry entry = new GameEntry();
 				entry.setGameId(rs.getInt("game_id"));
 				entry.setHomeId(rs.getInt("home_id"));
 				entry.setGuestId(rs.getInt("guest_id"));
-				//entry.setHomeName(rs.getString("home_name"));
-				//entry.setGuestName(rs.getString("guest_name"));
+				entry.setHome_name(rs.getString("home_name"));
+				entry.setGuest_name(rs.getString("guest_name"));
 				entry.setGoalsGuest(rs.getInt("goals_guest"));
 				entry.setGoalsHome(rs.getInt("goals_home"));
 				entry.setMatchday(rs.getInt("matchday_id"));
@@ -120,19 +120,64 @@ public class GameEntryMapper {
 		}
 	return entry;
 		}
-	public Entry deleteGameEntry (Entry ge) {
+	
+	public boolean saveGameEntry (GameEntry ge) {
+		Connection con =DBConnection.connection();
+		System.out.println("GameEntry save Mapper");
+		boolean result = false;
+		try {
+			
+			Statement stmt1 = con.createStatement();
+			Statement stmt2 = con.createStatement();
+			ResultSet rs1 = stmt1.executeQuery("SELECT team_id FROM teams WHERE name LIKE '"+ge.getHome_name()+"'");
+			ResultSet rs2 = stmt2.executeQuery("SELECT team_id FROM teams WHERE name LIKE '"+ge.getGuest_name()+"'");
+			
+			if (rs1.next() && rs2.next()) {
+				int homeTeamId = rs1.getInt("team_id");
+				int guestTeamId = rs2.getInt("team_id");
+			
+				ge.setHomeId(homeTeamId);
+				ge.setGuestId(guestTeamId);
+				
+				Statement stmt = con.createStatement();
+
+				stmt.executeUpdate("INSERT INTO gameentry (matchday_id,home_id,guest_id,goals_guest,goals_home) VALUES ("+ge.getMatchday()+","+ge.getHomeId()+","+ge.getGuestId()+","+ge.getGoalsGuest()+","+ge.getGoalsHome()+")");
+				result = true;
+			}
+		} catch (SQLException e2) {
+			result = false;
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	public boolean deleteGameEntry (GameEntry ge) {
+		boolean result = false;
 		//DB-Verbindung aufbauen
 				Connection con =DBConnection.connection();
 				System.out.println("GameEntry delete Mapper");
 				try {
 					Statement stmt = con.createStatement();
+					Statement stmt1 = con.createStatement();
+					Statement stmt2 = con.createStatement();
+					ResultSet rs1 = stmt1.executeQuery("SELECT team_id FROM teams WHERE name LIKE '"+ge.getHome_name()+"'");
+					ResultSet rs2 = stmt2.executeQuery("SELECT team_id FROM teams WHERE name LIKE '"+ge.getGuest_name()+"'");
+					
+					if (rs1.next() && rs2.next()) {
+						int homeTeamId = rs1.getInt("team_id");
+						int guestTeamId = rs2.getInt("team_id");
+					
+						ge.setHomeId(homeTeamId);
+						ge.setGuestId(guestTeamId);
+						
 
-		//Delete FROM 'gameentry' WHERE 'game_id' = ""
-				stmt.executeUpdate("DELETE FROM 'gameentry'" + "WHERE 'game_id' ="
-						+ge.getId());
+						stmt.executeUpdate("DELETE FROM gameentry WHERE home_id = "+ge.getHomeId()+" AND guest_id = "+ge.getGuestId());
+					
+						result = true;
+					}
 				}catch (SQLException e2) {
 					e2.printStackTrace();
 				}
-				return ge;
+				return result;
 	}
 }
