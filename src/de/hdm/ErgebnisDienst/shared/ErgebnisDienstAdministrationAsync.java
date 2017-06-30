@@ -23,21 +23,14 @@ public interface ErgebnisDienstAdministrationAsync {
 	
 	public void findByName(String name, AsyncCallback<Team> callback);
 
-
 	void getAllTeams(AsyncCallback<ArrayList<Team>> callback);
 
-
 	void getAllMatchdays(AsyncCallback<ArrayList<Matchday>> callback);
-	
-	
+		
 	void getAllGameEntrys(Matchday md, AsyncCallback<ArrayList<GameEntry>> callback);
-	//void getAllTeams(AsyncCallback<List<Team>> callback);
-	
-	//public void getCurrentUser(AsyncCallback<AppUser> callback)
 	
 	void saveGameEntry(GameEntry ge, AsyncCallback<Boolean> callback);
 	
-
 	void deleteGameEntry(GameEntry ge, AsyncCallback<Boolean> callback);
 	
 }

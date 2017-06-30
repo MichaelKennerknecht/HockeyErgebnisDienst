@@ -2,29 +2,16 @@ package de.hdm.ErgebnisDienst.client.gui;
 
 import java.util.ArrayList;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.FlexTable;
 
-import de.hdm.ErgebnisDienst.client.ClientsideSettings;
 import de.hdm.ErgebnisDienst.client.HockeyErgebnisDienst;
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
-import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
 import de.hdm.ErgebnisDienst.shared.bo.Matchday;
 
 public class MatchDay extends Update {
@@ -45,9 +32,10 @@ public class MatchDay extends Update {
 	 * Ergebnis anlegen
 	 */
 	public MatchDay() {
-		this.headlineText = "Bitte wählen Sie aus, was Sie anlegen möchten!";
+		this.headlineText = " ";
 		this.headlineTextStyle = "formTitle";
 		this.currentShowcase = this;
+	
 	}
 
 	/**
@@ -70,7 +58,7 @@ public class MatchDay extends Update {
 	 * <code>ShowCase</code> aufgerufen wird, wenn der Showcase aktiviert wird.
 	 */
 
-	// Proxy Objekt
+	
 	
 	public void run() {
 
@@ -102,7 +90,7 @@ public class MatchDay extends Update {
 				};
 
 
-				// du kannst in dieser Methode auf die table Variable von der anderen weiter oben zugreifen...
+				// Zugriff auf andere Tabelle
 				table.addColumn(nameColumn, "Spieltagsübersicht");
 
 				// Add a selection model to handle user selection.

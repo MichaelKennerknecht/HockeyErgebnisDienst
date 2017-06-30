@@ -25,8 +25,13 @@ public class Home extends Update {
 	 * übergebenen Username begrüßt wird.
 	 */
 	public Home() {
-		this.headlineText = "Herzlich Willkommen beim Ergebnisdienst";
-		this.headlineTextStyle = "formTitle";
+		
+		HTML welcomeHeader = new HTML(
+		"Herzlich Willkommen beim Ergebnisdienst");
+		this.add(welcomeHeader);
+		welcomeHeader.setStyleName("h1");
+		
+		
 	}
 
 	/**
@@ -53,11 +58,13 @@ public class Home extends Update {
 	protected void run() {
 		
 		HTML welcomeText = new HTML(
+				
+				
 				"Dies ist ein System zum Eintragen von Ergebnissen. "
 						+ "Das System ist von den Funktionen bewusst klein gehalten, um die nötigen Anforderungen für die Wiederholungsprüfung "
 						+ "im Modul IT Projekt im Studiengang Wirtschaftsinformatik und digitale Medien an der Hochschule der Medien Stuttgart zu erfüllen. "
 						+ "Das System soll den Studenten <b>Michael Kennerknecht</b> bei Anwendung des theoretischen Wissens unterstützen und als praktische Übung dienen."
-						+ "Um Zugriff auf die Ergebnisse zu erhalten, klicken Sie bitte auf der linken Navigationsleiste auf einen beliebigen Spieltag. ");
+						+ " Um Zugriff auf die Ergebnisse zu erhalten, klicken Sie bitte auf der linken Navigationsleiste auf einen beliebigen Spieltag. ");
 		this.add(welcomeText);
 		welcomeText.setStyleName("bodyStyle");
 

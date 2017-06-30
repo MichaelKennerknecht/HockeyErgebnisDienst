@@ -5,8 +5,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.ErgebnisDienst.client.ClientsideSettings;
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministrationAsync;
 import de.hdm.ErgebnisDienst.shared.bo.User;
 
 public class Impressum extends Update{
@@ -15,7 +13,7 @@ public class Impressum extends Update{
 	 * Die AdministrationService ermoeglicht die asynchrone Kommunikation mit der
 	 * Applikationslogik.
 	 */
-	private ErgebnisDienstAdministrationAsync adminService = ClientsideSettings.getAdministration();
+	
 	
 	User user = new User();
 

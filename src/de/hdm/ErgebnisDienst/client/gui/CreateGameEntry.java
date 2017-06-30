@@ -15,12 +15,11 @@ import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Image;
+
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.FlexTable;
 
 import de.hdm.ErgebnisDienst.client.HockeyErgebnisDienst;
-import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
 import de.hdm.ErgebnisDienst.shared.bo.Matchday;
 import de.hdm.ErgebnisDienst.shared.bo.Team;
@@ -139,7 +138,7 @@ public class CreateGameEntry extends Update {
 						
 					}
 					
-					//TODO Speichere Ergebnisse in DB
+					//Speichere Ergebnisse in DB
 					
 					if (ge != null) {
 						HockeyErgebnisDienst.adminService.saveGameEntry(ge, new AsyncCallback<Boolean>() {
@@ -172,17 +171,17 @@ public class CreateGameEntry extends Update {
 
 		
 
-		Button createEntryBtn = new Button();
-		createEntryBtn.setStylePrimaryName("btn btn-default createBtn btn32");
-		createEntryBtn.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("Details").clear();
+//		Button createEntryBtn = new Button();
+//		createEntryBtn.setStylePrimaryName("btn btn-default createBtn btn32");
+//		createEntryBtn.addClickHandler(new ClickHandler() {
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				RootPanel.get("Details").clear();
+//
+//			}
+//		});
 
-			}
-		});
-
-		this.add(createEntryBtn);
+		//this.add(createEntryBtn);
 
 	}
 	private void loadListBoxTeams(){
