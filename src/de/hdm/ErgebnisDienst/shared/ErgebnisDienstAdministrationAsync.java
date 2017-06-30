@@ -1,8 +1,6 @@
 package de.hdm.ErgebnisDienst.shared;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.ErgebnisDienst.shared.bo.*;

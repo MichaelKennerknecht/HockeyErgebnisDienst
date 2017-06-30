@@ -5,11 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import com.google.gwt.thirdparty.javascript.jscomp.FunctionInformationMap.Entry;
-import com.google.gwt.user.client.Window;
 
 import de.hdm.ErgebnisDienst.shared.bo.GameEntry;
 import de.hdm.ErgebnisDienst.shared.bo.Matchday;
@@ -52,10 +47,7 @@ public class GameEntryMapper {
 			Statement stmt = con.createStatement();
 			// Alle GameEntrys der Tabelle werden abgefragt
 			ResultSet rs = stmt.executeQuery("SELECT game_id, home_id, (SELECT name FROM hockeydienst.teams WHERE team_id = home_id) AS home_name, guest_id, (SELECT name FROM hockeydienst.teams WHERE team_id = guest_id) AS guest_name, goals_guest, goals_home, matchday_id FROM hockeydienst.gameentry WHERE matchday_id = " + md.getMdId());
-			
-			//TODO
-			//home,guest name anpassen
-			
+						
 			while (rs.next()) {
 				GameEntry entry = new GameEntry();
 				entry.setGameId(rs.getInt("game_id"));
@@ -81,6 +73,10 @@ public class GameEntryMapper {
 	 * @return GameEntry
 	 * @throws Exception
 	 */
+	
+	/**
+	 * Spieleintrag hinzufügen.
+	 */
 	public GameEntry insert (GameEntry entry) throws Exception {
 		//DB-Verbindung aufbauen
 		Connection con = DBConnection.connection();
@@ -99,7 +95,7 @@ public class GameEntryMapper {
 			entry.setGameId(rs.getInt("maxGame_Id")+1);
 			stmt = con.createStatement();
 		
-		//Einfügeoption
+		//SQL-Befehl für DB
 			stmt.executeUpdate("INSERT INTO gameentry (game_id, home_id, guest_id, goals_guest, goals_home)"
 					+ "VALUES ("
 					+ entry.getGameId()
@@ -120,7 +116,9 @@ public class GameEntryMapper {
 		}
 	return entry;
 		}
-	
+	/**
+	 * Eingegbenen Spieleintrag in DB eintragen
+	 */
 	public boolean saveGameEntry (GameEntry ge) {
 		Connection con =DBConnection.connection();
 		System.out.println("GameEntry save Mapper");
@@ -151,6 +149,10 @@ public class GameEntryMapper {
 		return result;
 	}
 	
+	
+	/**
+	 * Ausgewählte Partie löschen
+	 */
 	public boolean deleteGameEntry (GameEntry ge) {
 		boolean result = false;
 		//DB-Verbindung aufbauen

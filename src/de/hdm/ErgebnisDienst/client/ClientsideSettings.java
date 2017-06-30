@@ -109,7 +109,9 @@ public class ClientsideSettings extends CommonSettings {
 		}
 		return administration;
 	}
-	
+	/**
+	 * Reportgenerator nicht umgesetzt
+	 */
 	/*public static ReportGeneratorAsync getReportGenerator() {
 		if (report == null) {
 			report = GWT.create(ReportGenerator.class);

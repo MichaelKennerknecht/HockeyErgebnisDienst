@@ -2,19 +2,13 @@ package de.hdm.ErgebnisDienst.server;
 
 import de.hdm.ErgebnisDienst.server.db.*;
 import de.hdm.ErgebnisDienst.shared.bo.*;
-import de.hdm.ErgebnisDienst.shared.*;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Vector;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
+//import com.google.appengine.api.users.User;
+//import com.google.appengine.api.users.UserService;
+//import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.ErgebnisDienst.shared.ErgebnisDienstAdministration;
 
@@ -121,23 +115,7 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 	 * Auslesen des aktuellen Benutzernamen aus der Google Accounts API, um das
 	 * Profil des aktuellen Benutzers aus der Datenbank zu lesen.
 	 */
-	/**
-	 * In dieser Methode kann anhand eines Users nach dessen Notizbuechern
-	 * gesucht werden. Diese werden dann in einer ArrayList zurueck gegeben. Ist
-	 * noch kein Notizbuch angelegt wird eins angelegt, zusammen mit einer
-	 * Permission.
-	 */
-	// public ArrayList<Team> getAllTeams() throws IllegalArgumentException {
-	//// System.out.println("Hallo bin in der Methode");
-	//// List<Team> list = this.teMapper.getAllTeams();
-	////
-	//// if (list.size() == 0) {
-	//// return null;
-	//// } else {
-	//// return list; }
-	// return null;
-	//
-	// }
+	
 
 	public Team findByName(Team name) throws IllegalArgumentException {
 		System.out.println("Hallo bin in der Methode");
@@ -147,6 +125,10 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 		return name;
 	}
 
+	
+	/**
+	 * Ausl
+	 */
 	@Override
 	public Team findByName(String name) throws IllegalArgumentException {
 
@@ -164,17 +146,16 @@ public class ErgebnisAdministrationImpl extends RemoteServiceServlet implements 
 
 		return teMapper.getAllTeams();
 	}
-	
+
 	@Override
 	public ArrayList<GameEntry> getAllGameEntrys(Matchday md) throws IllegalArgumentException {
 		return nMapper.getAllGameEntrys(md);
 	}
-	
+
 	@Override
 	public boolean saveGameEntry(GameEntry ge) throws IllegalArgumentException {
 		return nMapper.saveGameEntry(ge);
 	}
-	
 
 	@Override
 	public boolean deleteGameEntry(GameEntry ge) throws IllegalArgumentException {
